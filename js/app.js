@@ -270,7 +270,7 @@ input.addEventListener('keydown', e => {
   else if (e.key === 'ArrowUp')   { acSel = Math.max(acSel - 1, 0); hiAc(items); e.preventDefault(); }
   else if (e.key === 'Enter') {
     if (acSel >= 0 && acFilt[acSel]) { input.value = acFilt[acSel].name; acBox.classList.remove('open'); }
-    else submitGuess();
+    submitGuess();
   }
 });
 
@@ -317,6 +317,16 @@ function finClassic(won) {
   cOver = true;
   document.getElementById('guess-btn').disabled = true;
   input.disabled = true;
+  // Révèle l'image du personnage
+  const imgFile = getImgFile(TARGET_C);
+  if (imgFile) {
+    const revealEl  = document.getElementById('classic-reveal');
+    const revealImg = document.getElementById('classic-reveal-img');
+    const revealName = document.getElementById('classic-reveal-name');
+    revealImg.src = `images/${imgFile}.jpg`;
+    revealName.textContent = TARGET_C.name;
+    revealEl.style.display = 'block';
+  }
   if (won) {
     document.getElementById('win-char-name').textContent  = TARGET_C.name;
     document.getElementById('win-attempts').textContent   = cGuesses.length;
@@ -473,7 +483,9 @@ function initPoster() {
   const img    = document.getElementById('wanted-img');
   const noImg  = document.getElementById('wanted-no-img');
   img.src = '';
-  img.src = `images/${getImgFile(TARGET_W)}.jpg?v=29`;
+  img.src = `images/${getImgFile(TARGET_W)}.jpg?v=30`;
+  img.draggable = false;
+  img.addEventListener('dragstart', e => e.preventDefault());
   applyFilter(img, blurPx);
   img.onerror = () => { img.style.display = 'none'; noImg.style.display = 'flex'; };
   img.onload  = () => { img.style.display = 'block'; noImg.style.display = 'none'; };
@@ -580,6 +592,8 @@ function initFlagGrid() {
     cell.dataset.r = r; cell.dataset.c = c; cell.dataset.i = i;
     const img = document.createElement('img');
     img.src = src; img.alt = '';
+    img.draggable = false;
+    img.addEventListener('dragstart', e => e.preventDefault());
     cell.appendChild(img);
     grid.appendChild(cell);
   }
