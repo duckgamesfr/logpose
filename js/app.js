@@ -505,16 +505,20 @@ function useHint() {
 
 // ===== MODE WANTED =====
 function initPoster() {
-  const blurPx = BLUR_STEPS[Math.min(wGuesses.length, BLUR_STEPS.length - 1)];
-  const img    = document.getElementById('wanted-img');
-  const noImg  = document.getElementById('wanted-no-img');
+  const img   = document.getElementById('wanted-img');
+  const noImg = document.getElementById('wanted-no-img');
   img.src = '';
   img.src = `images/${getImgFile(TARGET_W)}.jpg?v=30`;
   img.draggable = false;
   img.addEventListener('dragstart', e => e.preventDefault());
-  applyFilter(img, blurPx);
   img.onerror = () => { img.style.display = 'none'; noImg.style.display = 'flex'; };
   img.onload  = () => { img.style.display = 'block'; noImg.style.display = 'none'; };
+  if (wOver) {
+    revealFull();
+  } else {
+    const blurPx = BLUR_STEPS[Math.min(wGuesses.length, BLUR_STEPS.length - 1)];
+    applyFilter(img, blurPx);
+  }
   updateDots(); updateHint();
 }
 
@@ -624,7 +628,8 @@ function initFlagGrid() {
     cell.appendChild(img);
     grid.appendChild(cell);
   }
-  revealFlagCells();
+  if (fOver) revealAllFlag();
+  else       revealFlagCells();
   updateFlagHint();
 }
 
@@ -1047,13 +1052,34 @@ const MAX_EM_GUESSES = 8; // = nombre d'émojis max par personnage
 let emGuesses = [], emOver = false, emNames = new Set();
 let emTarget  = null;   // null → sera initialisé sur TARGET_EM à l'ouverture du mode
 
+function showEmojiReveal() {
+  const revEl   = document.getElementById('emoji-reveal');
+  const revImg  = document.getElementById('emoji-reveal-img');
+  const revName = document.getElementById('emoji-reveal-name');
+  const imgFile = getImgFile(emTarget);
+  if (imgFile) {
+    revImg.src = `images/${imgFile}.jpg`;
+    revImg.style.display = '';
+  } else {
+    revImg.style.display = 'none';
+  }
+  revName.textContent = emTarget.name;
+  revEl.style.display = 'block';
+}
+
 function initEmojiMode() {
   // Premier appel : utiliser la cible quotidienne
   if (!emTarget) emTarget = TARGET_EM;
 
   // Réinitialise la section
   document.getElementById('emoji-guesses').innerHTML = '';
-  document.getElementById('emoji-reveal').style.display = 'none';
+
+  // Restaure la révélation si la partie est déjà terminée
+  if (emOver) {
+    showEmojiReveal();
+  } else {
+    document.getElementById('emoji-reveal').style.display = 'none';
+  }
 
   updateEmojiStrip();
   updateEmojiStatus();
@@ -1066,9 +1092,9 @@ function updateEmojiStrip(freshIndex = -1) {
   const strip = document.getElementById('emoji-strip');
   const emojis = emTarget.emoji;
   const total  = emojis.length;
-  // Nombre d'émojis révélés = nombre de mauvaises réponses + 1 (min 1 toujours visible)
+  // Quand la partie est finie on révèle tout, sinon wrongCount + 1
   const wrongCount = emGuesses.filter(g => g.name !== emTarget.name).length;
-  const revealed   = Math.min(wrongCount + 1, total);
+  const revealed   = emOver ? total : Math.min(wrongCount + 1, total);
 
   strip.innerHTML = '';
   for (let i = 0; i < total; i++) {
@@ -1160,6 +1186,7 @@ function finEmoji(won) {
   }
 
   updateEmojiStatus();
+  showEmojiReveal();
 
   if (won) {
     document.getElementById('win-char-name').textContent  = emTarget.name;
