@@ -261,7 +261,7 @@ function getImgFile(char) {
 
 // salt : nombre premier différent par mode pour éviter les collisions
 function dailyPick(pool, salt = 1) {
-  const d = new Date();
+  const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
   const base = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
   const seed = (base * salt) >>> 0; // force entier non signé 32 bits
   return pool[seed % pool.length];

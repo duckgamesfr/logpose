@@ -1484,6 +1484,78 @@ main {
   .emoji-box   { width: 46px; height: 46px; font-size: 1.5rem; }
 }
 
+/* ===== ENCARTS PUBLICITAIRES ===== */
+.ad-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0;
+}
+.ad-slot--leaderboard {
+  background: rgba(0,0,0,0.15);
+  border-top: 1px solid rgba(200,148,10,0.1);
+  border-bottom: 1px solid rgba(200,148,10,0.1);
+}
+.ad-slot--rectangle {
+  padding: 20px 0 10px;
+}
+.ad-slot--modal {
+  padding: 16px 0 8px;
+  border-top: 1px solid rgba(200,148,10,0.1);
+  margin-top: 12px;
+}
+.ad-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  opacity: 0.5;
+}
+.ad-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200,148,8,0.04);
+  border: 1.5px dashed rgba(200,148,8,0.25);
+  border-radius: 4px;
+  color: rgba(200,148,8,0.3);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  max-width: 100%;
+}
+.ad-728x90  { width: 728px; height: 90px; }
+.ad-300x250 { width: 300px; height: 250px; }
+
+@media (max-width: 760px) {
+  .ad-728x90 { width: 320px; height: 50px; } /* Mobile Banner */
+}
+
+/* ===== COMPTE À REBOURS ===== */
+.next-puzzle {
+  text-align: center;
+  padding: 18px 20px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.next-puzzle-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.next-puzzle-timer {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
 /* ===== FOOTER ===== */
 footer {
   position: relative; z-index: 1;

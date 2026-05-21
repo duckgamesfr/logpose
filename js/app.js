@@ -136,6 +136,7 @@ document.getElementById('date-label').textContent =
   new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 function seedForDate(d, salt = 1) {
+  // d doit être une date Paris (depuis parisNow())
   const base = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
   return (base * salt) >>> 0;
 }
@@ -155,7 +156,7 @@ saveTodayTargets();
 
 // Affiche la barre "hier" — localStorage en priorité, seed en fallback
 function buildYesterdayBar() {
-  const d = new Date(); d.setDate(d.getDate() - 1);
+  const d = parisNow(); d.setDate(d.getDate() - 1);
   const yKey = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
   const stored = JSON.parse(lsGet('op-daily-' + yKey) || 'null');
   const el = document.getElementById('yesterday-bar');
@@ -852,8 +853,12 @@ function saveStats(mode, stats) {
   lsSet(`op-stats-${mode}`, JSON.stringify(stats));
 }
 
+function parisNow() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+}
+
 function todayKey() {
-  const d = new Date();
+  const d = parisNow();
   return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
 }
 
@@ -1469,6 +1474,25 @@ function updateScoreBar() {
 // Init au chargement
 updateScoreBar();
 restoreAllStates();
+
+// ===== COMPTE À REBOURS =====
+function startCountdown() {
+  const el = document.getElementById('next-puzzle-timer');
+  if (!el) return;
+  function tick() {
+    const paris    = parisNow();
+    const midnight = new Date(paris);
+    midnight.setHours(24, 0, 0, 0);          // minuit Paris
+    const diff = midnight - paris;            // ms jusqu'au reset
+    const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+    const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+    el.textContent = `${h}:${m}:${s}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+startCountdown();
 
 // ===== CONFETTIS =====
 function launchConfetti() {
