@@ -1177,14 +1177,18 @@ main {
 .dist-bar.highlight { background: linear-gradient(90deg, var(--green), var(--green-l)); box-shadow: 0 0 12px var(--glow-green); }
 .dist-bar span { font-size: 0.78rem; font-weight: 700; color: #04090f; white-space: nowrap; }
 .stats-empty { text-align: center; color: var(--text3); font-size: 0.88rem; padding: 24px 0; letter-spacing: 0.05em; }
-.stats-reset-btn {
-  display: block; margin: 18px auto 0;
-  background: none; border: 1px solid var(--border2);
-  color: var(--text3); border-radius: 8px;
-  padding: 6px 14px; font-size: 0.72rem; letter-spacing: 0.08em;
-  cursor: pointer; opacity: 0.6; transition: opacity 0.2s, color 0.2s;
+.stats-share-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  margin: 18px auto 0;
+  background: linear-gradient(135deg, #c89408 0%, #9a7006 100%);
+  color: #04090f; border: none; border-radius: 20px;
+  padding: 9px 22px; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; box-shadow: 0 2px 10px rgba(200,148,10,0.35);
+  transition: transform 0.14s, box-shadow 0.14s;
 }
-.stats-reset-btn:hover { opacity: 1; color: var(--red); border-color: var(--red); }
+.stats-share-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(200,148,10,0.5); }
+.stats-share-btn:active { transform: translateY(0); }
 
 /* ===== MODE FRUIT DU DÉMON ===== */
 #fruit-section { display: none; }

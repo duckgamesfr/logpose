@@ -965,7 +965,7 @@ function renderStatsContent(mode) {
     }
   }
 
-  html += `<button class="stats-reset-btn" onclick="resetStats('${mode}')">🗑️ Réinitialiser ces stats</button>`;
+  html += `<button class="stats-share-btn" onclick="closeStats(); shareDaily()">📋 Partager mon récap</button>`;
 
   document.getElementById('stats-content').innerHTML = html;
 
@@ -1335,7 +1335,7 @@ function buildShareText() {
 
   lines.push('');
   lines.push(`⭐ ${total.toLocaleString('fr-FR')} / 50 000 pts`);
-  lines.push('onepiecedle.fr');
+  lines.push('https://onepiecedle.fr');
   return lines.join('\n');
 }
 
