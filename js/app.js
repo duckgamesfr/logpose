@@ -138,13 +138,30 @@ function seedForDate(d, salt = 1) {
   const base = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
   return (base * salt) >>> 0;
 }
-const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-const yChar   = CHARACTERS[seedForDate(yesterday,  1)   % CHARACTERS.length];
-const yWanted = WANTED_CHARS[seedForDate(yesterday, 31)  % WANTED_CHARS.length];
-const yFlag   = FLAGS[seedForDate(yesterday,        97)  % FLAGS.length];
-const yEmoji  = EMOJI_POOL[seedForDate(yesterday,   137) % EMOJI_POOL.length];
-document.getElementById('yesterday-bar').innerHTML =
-  `Hier — Classique : <strong>${esc(yChar.name)}</strong> &nbsp;|&nbsp; Wanted : <strong>${esc(yWanted.name)}</strong> &nbsp;|&nbsp; Pavillon : <strong>${esc(yFlag.name)}</strong> &nbsp;|&nbsp; Émoji : <strong>${esc(yEmoji.name)}</strong>`;
+// Sauvegarde les cibles du jour (une seule fois par jour, pour le "hier" de demain)
+function saveTodayTargets() {
+  const key = 'op-daily-' + todayKey();
+  if (lsGet(key)) return;
+  lsSet(key, JSON.stringify({
+    classic: TARGET_C.name,
+    wanted:  TARGET_W.name,
+    flag:    TARGET_F.name,
+    fruit:   TARGET_FRU.holder,
+    emoji:   TARGET_EM.name,
+  }));
+}
+saveTodayTargets();
+
+// Affiche la barre "hier" depuis localStorage (précis) ou la masque si absent
+function buildYesterdayBar() {
+  const d = new Date(); d.setDate(d.getDate() - 1);
+  const yKey = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+  const stored = JSON.parse(lsGet('op-daily-' + yKey) || 'null');
+  const el = document.getElementById('yesterday-bar');
+  if (!stored) { el.style.display = 'none'; return; }
+  el.innerHTML = `Hier — Classique : <strong>${esc(stored.classic)}</strong> &nbsp;|&nbsp; Wanted : <strong>${esc(stored.wanted)}</strong> &nbsp;|&nbsp; Pavillon : <strong>${esc(stored.flag)}</strong> &nbsp;|&nbsp; Émoji : <strong>${esc(stored.emoji)}</strong>`;
+}
+buildYesterdayBar();
 
 // ===== NAVIGATION PAR ONGLETS =====
 function switchMode(mode) {
