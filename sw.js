@@ -1,4 +1,4 @@
-const CACHE_NAME = 'logpose-v69';
+const CACHE_NAME = 'logpose-v70';
 
 const STATIC_ASSETS = [
   '/',
