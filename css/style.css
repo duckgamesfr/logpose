@@ -279,25 +279,35 @@ body.size-large  { zoom: 1.22; }
   cursor: pointer;
   transition: all 0.25s;
   position: relative;
+  overflow: visible;
 }
-/* Indicateur "mode complété" — petit point vert en haut à droite */
-.mode-tab.tab-done::after {
-  content: '✓';
+/* Indicateurs victoire / défaite sur les onglets */
+.mode-tab.tab-done::after,
+.mode-tab.tab-lost::after {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 14px;
-  height: 14px;
-  background: #22c55e;
-  color: #fff;
+  top: -6px;
+  right: -6px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  font-size: 0.5rem;
+  font-size: 0.55rem;
   font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.mode-tab.tab-done::after {
+  content: '✓';
+  background: #22c55e;
+  color: #fff;
+}
+.mode-tab.tab-lost::after {
+  content: '✕';
+  background: #ef4444;
+  color: #fff;
 }
 .mode-tab:hover {
   border-color: var(--gold);

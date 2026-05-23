@@ -1023,7 +1023,7 @@ function renderStatsContent(mode) {
 
   // ── Score du jour ──────────────────────────────────────────────
   const todayScores = safeParseJSON(lsGet('op-score-' + todayKey()), {});
-  const rawMode     = Object.hasOwn(todayScores, mode) ? sanitizeNum(todayScores[mode]) : undefined;
+  const rawMode     = Object.prototype.hasOwnProperty.call(todayScores, mode) ? sanitizeNum(todayScores[mode]) : undefined;
   const totalScore  = Object.values(todayScores).reduce((a, b) => a + sanitizeNum(b), 0);
   const modeLabels  = { classic:'Classique', wanted:'Wanted', flag:'Pavillon', fruit:'Fruit du Démon', emoji:'Émoji' };
   const scoreHtml   = rawMode !== undefined ? `
@@ -1854,7 +1854,10 @@ function updateTabDoneStates() {
   const results = safeParseJSON(lsGet('op-result-' + todayKey()), {});
   ['classic','wanted','flag','fruit','emoji','audio'].forEach(mode => {
     const tab = document.getElementById('tab-' + mode);
-    if (tab) tab.classList.toggle('tab-done', !!results[mode]);
+    if (!tab) return;
+    const res = results[mode];
+    tab.classList.toggle('tab-done', !!(res && res.won));
+    tab.classList.toggle('tab-lost', !!(res && res.won === false));
   });
 }
 
@@ -1876,7 +1879,7 @@ function toggleScoreBreakdown(e) {
     ];
     let html = '';
     MODES.forEach(({ key, icon, label }) => {
-      const pts    = Object.hasOwn(scores, key) ? sanitizeNum(scores[key]) : undefined;
+      const pts    = Object.prototype.hasOwnProperty.call(scores, key) ? sanitizeNum(scores[key]) : undefined;
       const res    = results[key];
       const status = !res ? 'sb-pending' : res.won ? 'sb-won' : 'sb-lost';
       const valStr = pts !== undefined ? pts.toLocaleString('fr-FR') + ' pts' : '—';
@@ -2005,23 +2008,27 @@ function launchPerfectDay() {
   });
 }
 
-// Init au chargement
-updateScoreBar();
-restoreAllStates();
+// Init au chargement — try/catch pour garantir que le timer démarre même si la
+// restauration d'état plante sur un navigateur ou un localStorage corrompu
+try { updateScoreBar(); } catch(e) { console.warn('updateScoreBar init:', e); }
+try { restoreAllStates(); } catch(e) { console.warn('restoreAllStates init:', e); }
 
 // ===== COMPTE À REBOURS =====
 function startCountdown() {
   const el = document.getElementById('next-puzzle-timer');
   if (!el) return;
   function tick() {
-    const paris    = parisNow();
-    const midnight = new Date(paris);
-    midnight.setHours(24, 0, 0, 0);          // minuit Paris
-    const diff = midnight - paris;            // ms jusqu'au reset
-    const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
-    const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-    const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-    el.textContent = `${h}:${m}:${s}`;
+    try {
+      const paris    = parisNow();
+      const midnight = new Date(paris);
+      midnight.setHours(24, 0, 0, 0);
+      const diff = midnight - paris;
+      if (!Number.isFinite(diff) || diff < 0) return;
+      const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+      el.textContent = `${h}:${m}:${s}`;
+    } catch(e) {}
   }
   tick();
   setInterval(tick, 1000);
