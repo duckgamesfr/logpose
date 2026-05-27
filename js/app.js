@@ -463,7 +463,7 @@ function finClassic(won) {
     const revealEl  = document.getElementById('classic-reveal');
     const revealImg = document.getElementById('classic-reveal-img');
     const revealName = document.getElementById('classic-reveal-name');
-    revealImg.src = `images/${imgFile}.png`;
+    revealImg.src = `images/${imgFile}.jpg`;
     revealName.textContent = TARGET_C.name;
     revealEl.style.display = 'block';
   }
@@ -529,7 +529,7 @@ function buildGuessRow(char, T) {
   row.innerHTML = `
     <div class="cell cell-char">
       ${getImgFile(char)
-        ? `<img class="char-thumb" src="images/${esc(getImgFile(char))}.png" alt="${esc(char.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="char-name-fallback" style="display:none">${esc(char.name)}</span>`
+        ? `<img class="char-thumb" src="images/${esc(getImgFile(char))}.jpg" alt="${esc(char.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="char-name-fallback" style="display:none">${esc(char.name)}</span>`
         : `<span class="char-name-only">${esc(char.name)}</span>`
       }
     </div>
@@ -642,7 +642,7 @@ function initPoster() {
   const img   = document.getElementById('wanted-img');
   const noImg = document.getElementById('wanted-no-img');
   img.src = '';
-  img.src = `images/${getImgFile(TARGET_W)}.png?v=30`;
+  img.src = `images/${getImgFile(TARGET_W)}.jpg?v=30`;
   img.draggable = false;
   img.addEventListener('dragstart', e => e.preventDefault());
   img.onerror = () => { img.style.display = 'none'; noImg.style.display = 'flex'; };
@@ -1198,7 +1198,7 @@ function finFruit(won) {
       const revealEl = document.getElementById('fruit-reveal');
       const revealImg = document.getElementById('fruit-reveal-img');
       const revealName = document.getElementById('fruit-reveal-name');
-      revealImg.src = `images/${imgFile}.png`;
+      revealImg.src = `images/${imgFile}.jpg`;
       revealName.textContent = TARGET_FRU.holder;
       revealEl.style.display = 'block';
     }
@@ -1253,7 +1253,7 @@ function showEmojiReveal() {
   const revName = document.getElementById('emoji-reveal-name');
   const imgFile = getImgFile(emTarget);
   if (imgFile) {
-    revImg.src = `images/${imgFile}.png`;
+    revImg.src = `images/${imgFile}.jpg`;
     revImg.style.display = '';
   } else {
     revImg.style.display = 'none';
@@ -1379,7 +1379,7 @@ function finEmoji(won) {
     const revEl   = document.getElementById('emoji-reveal');
     const revImg  = document.getElementById('emoji-reveal-img');
     const revName = document.getElementById('emoji-reveal-name');
-    revImg.src = `images/${imgFile}.png`;
+    revImg.src = `images/${imgFile}.jpg`;
     revName.textContent = emTarget.name;
     revEl.style.display = 'block';
   }
