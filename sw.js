@@ -1,11 +1,11 @@
-const CACHE_NAME = 'logpose-v76';
+const CACHE_NAME = 'logpose-v77';
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/css/style.css?v=76',
-  '/js/data.js?v=76',
-  '/js/app.js?v=76',
+  '/css/style.css?v=77',
+  '/js/data.js?v=77',
+  '/js/app.js?v=77',
   '/manifest.json',
   '/images/jolly_roger.png',
   '/images/favicon.png',
