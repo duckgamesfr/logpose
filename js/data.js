@@ -33,8 +33,9 @@ let ALIASES      = {};
 let FRUITS       = [];
 let OPENINGS     = [];
 let WANTED_CHARS = [];
-let WANTED_EXTRA = []; // réservé pour futures affiches spéciales
-let EMOJI_POOL   = [];
+let WANTED_EXTRA  = []; // réservé pour futures affiches spéciales
+let EMOJI_POOL    = [];
+let EMOJI_NAMES   = {}; // emoji → nom lisible (infobulle)
 let TARGET_C, TARGET_W, TARGET_F, TARGET_FRU, TARGET_EM, TARGET_AU;
 let CELL_ORDER   = [];
 
@@ -44,12 +45,13 @@ async function loadGameData() {
   if (!res.ok) throw new Error(`data.json introuvable (${res.status})`);
   const raw  = await res.json();
 
-  ARCS       = raw.ARCS;
-  CHARACTERS = raw.CHARACTERS;
-  FLAGS      = raw.FLAGS;
-  ALIASES    = raw.ALIASES;
-  FRUITS     = raw.FRUITS;
-  OPENINGS   = raw.OPENINGS;
+  ARCS        = raw.ARCS;
+  CHARACTERS  = raw.CHARACTERS;
+  FLAGS       = raw.FLAGS;
+  ALIASES     = raw.ALIASES;
+  FRUITS      = raw.FRUITS;
+  OPENINGS    = raw.OPENINGS;
+  EMOJI_NAMES = raw.EMOJI_NAMES || {};
 
   // Dérivés
   WANTED_CHARS = CHARACTERS.filter(c => c.img !== null && c.img !== undefined);

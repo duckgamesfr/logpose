@@ -1339,7 +1339,10 @@ function updateEmojiStrip(freshIndex = -1) {
     if (i < revealed) {
       box.className = 'emoji-box revealed' + (i === freshIndex ? ' fresh' : '');
       box.textContent = emojis[i];
-      box.title = `Indice ${i + 1}`;
+      const eName = (typeof EMOJI_NAMES !== 'undefined' && EMOJI_NAMES[emojis[i]])
+        ? EMOJI_NAMES[emojis[i]]
+        : emojis[i];
+      box.title = eName;
       box.dataset.idx = i + 1;
     } else {
       box.className = 'emoji-box locked';
