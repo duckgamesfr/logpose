@@ -1,11 +1,22 @@
-const CACHE_NAME = 'logpose-v82';
+const CACHE_NAME = 'logpose-v83';
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/css/style.css?v=82',
-  '/js/data.js?v=82',
-  '/js/app.js?v=82',
+  '/css/base.css?v=83',
+  '/css/layout.css?v=83',
+  '/css/modals.css?v=83',
+  '/css/classic.css?v=83',
+  '/css/wanted.css?v=83',
+  '/css/flag.css?v=83',
+  '/css/fruit.css?v=83',
+  '/css/inf.css?v=83',
+  '/css/emoji.css?v=83',
+  '/css/misc.css?v=83',
+  '/css/audio.css?v=83',
+  '/js/data.js?v=83',
+  '/js/app.js?v=83',
+  '/data.json',
   '/manifest.json',
   '/images/jolly_roger.png',
   '/images/favicon.png',
@@ -40,12 +51,13 @@ self.addEventListener('fetch', event => {
   // Ne pas intercepter les requêtes audio (MP3) — toujours depuis le réseau
   if (url.pathname.startsWith('/audio/')) return;
 
-  // Network-first pour HTML et JS/CSS (on veut toujours la dernière version)
+  // Network-first pour HTML, JS/CSS et JSON (on veut toujours la dernière version)
   if (
     url.pathname.endsWith('.html') ||
     url.pathname === '/' ||
     url.pathname.endsWith('.js') ||
-    url.pathname.endsWith('.css')
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.json')
   ) {
     event.respondWith(
       fetch(event.request)

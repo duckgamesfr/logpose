@@ -1,0 +1,239 @@
+/* ===== ENCARTS PUBLICITAIRES ===== */
+.ad-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0;
+}
+.ad-slot--leaderboard {
+  background: rgba(0,0,0,0.15);
+  border-top: 1px solid rgba(200,148,10,0.1);
+  border-bottom: 1px solid rgba(200,148,10,0.1);
+}
+.ad-slot--rectangle {
+  padding: 20px 0 10px;
+}
+.ad-slot--modal {
+  padding: 16px 0 8px;
+  border-top: 1px solid rgba(200,148,10,0.1);
+  margin-top: 12px;
+}
+.ad-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  opacity: 0.5;
+}
+.ad-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200,148,8,0.04);
+  border: 1.5px dashed rgba(200,148,8,0.25);
+  border-radius: 4px;
+  color: rgba(200,148,8,0.3);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  max-width: 100%;
+}
+.ad-728x90  { width: 728px; height: 90px; }
+.ad-300x250 { width: 300px; height: 250px; }
+
+@media (max-width: 760px) {
+  .ad-728x90 { width: 320px; height: 50px; } /* Mobile Banner */
+}
+
+/* ===== PERFECT DAY 50 000 ===== */
+.perfect-overlay {
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(4,9,15,0.88);
+  display: flex; align-items: center; justify-content: center;
+  animation: perfectIn 0.4s ease;
+  cursor: pointer;
+}
+.perfect-overlay.perfect-fade-out {
+  animation: perfectOut 0.6s ease forwards;
+}
+@keyframes perfectIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes perfectOut { from { opacity:1; } to { opacity:0; } }
+
+.perfect-canvas {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.perfect-content {
+  position: relative; z-index: 1;
+  text-align: center;
+  animation: perfectPop 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.15s both;
+}
+@keyframes perfectPop {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.perfect-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(200,148,8,0.8));
+  animation: perfectBob 1.8s ease-in-out infinite;
+}
+@keyframes perfectBob {
+  0%,100% { transform: translateY(0);    }
+  50%      { transform: translateY(-12px); }
+}
+.perfect-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  color: #ffd84d;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 30px rgba(200,148,8,0.9), 0 0 60px rgba(200,148,8,0.5);
+  margin-bottom: 12px;
+}
+.perfect-sub {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.perfect-sub2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+/* ===== COMPTE À REBOURS ===== */
+.next-puzzle {
+  text-align: center;
+  padding: 18px 20px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.next-puzzle-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.next-puzzle-timer {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 22px;
+  border-top: 2px solid rgba(200,148,10,0.2);
+  font-size: 0.76rem; color: var(--text3); letter-spacing: 0.12em;
+  background: var(--header-bg);
+  color: rgba(200,148,10,0.5);
+  line-height: 2;
+}
+.footer-about-btn {
+  background: none; border: 1px solid rgba(200,148,10,0.35);
+  color: rgba(200,148,10,0.65); border-radius: 20px;
+  padding: 2px 12px; font-size: 0.72rem; cursor: pointer;
+  letter-spacing: 0.08em; transition: border-color 0.2s, color 0.2s;
+  margin-right: 6px;
+}
+.footer-about-btn:hover { border-color: var(--gold); color: var(--gold); }
+.footer-version {
+  font-size: 0.72rem; color: rgba(200,148,10,0.45); letter-spacing: 0.1em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  h1 { font-size: 1.9rem; }
+  .wanted-layout, .flag-layout { flex-direction: column; align-items: center; }
+  .flag-grid-wrap { width: 280px; }
+  .grid-cols { grid-template-columns: 1.6fr 0.7fr 1fr 0.8fr 1fr 1fr 0.7fr 1fr 0.8fr; gap: 4px; }
+  .cell { min-height: 54px; padding: 5px 3px; font-size: 0.6rem; }
+  .col-label { font-size: 0.5rem; }
+  #guess-btn { padding: 14px 16px; font-size: 0.9rem; }
+  .header-inner { flex-direction: column; gap: 10px; }
+  .mode-tabs { flex-wrap: wrap; gap: 6px; padding: 10px 12px; overflow-x: visible; }
+  .mode-tab { padding: 7px 12px; font-size: 0.78rem; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .modal-box { padding: 22px 18px; }
+}
+
+/* ===== PUBLICITÉS MOBILE ===== */
+.ad-mobile { display: none; } /* caché sur desktop */
+@media (max-width: 700px) {
+  .ad-mobile {
+    display: block;
+    width: 100%;
+    background: transparent;
+    text-align: center;
+    overflow: hidden;
+  }
+  .ad-mobile-top {
+    min-height: 60px;
+    border-bottom: 1px solid rgba(200,148,10,0.1);
+  }
+  .ad-mobile-bottom {
+    min-height: 100px;
+    border-top: 1px solid rgba(200,148,10,0.1);
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 6px; }
+
+
+/* ===== ANIMATIONS ===== */
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+/* ===== EASTER EGG KONAMI ===== */
+.konami-player {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0a0a0a;
+  border: 2px solid var(--gold);
+  border-radius: 40px;
+  padding: 10px 18px;
+  box-shadow: 0 0 24px rgba(200,148,10,0.5);
+  animation: fadeIn .3s ease;
+}
+.konami-player.hidden { display: none; }
+.konami-player-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+.konami-play-btn, .konami-stop-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--gold);
+  padding: 0 2px;
+  line-height: 1;
+  transition: transform .15s;
+}
+.konami-play-btn:hover, .konami-stop-btn:hover { transform: scale(1.2); }
+

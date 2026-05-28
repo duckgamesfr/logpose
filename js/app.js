@@ -213,8 +213,6 @@ function saveTodayTargets() {
     audio:   TARGET_AU.name,
   }));
 }
-saveTodayTargets();
-
 // Affiche la barre "hier" — localStorage en priorité, seed en fallback
 function buildYesterdayBar() {
   const d = parisNow(); d.setDate(d.getDate() - 1);
@@ -238,8 +236,6 @@ function buildYesterdayBar() {
     `Hier &nbsp;—&nbsp; Classique : <strong>${esc(data.classic)}</strong> &nbsp;|&nbsp; Wanted : <strong>${esc(data.wanted)}</strong> &nbsp;|&nbsp; Pavillon : <strong>${esc(data.flag)}</strong> &nbsp;|&nbsp; Fruit : <strong>${esc(data.fruit)}</strong> &nbsp;|&nbsp; Émoji : <strong>${esc(data.emoji)}</strong>` +
     `<br><span class="yesterday-op">🎵 Opening : <strong>${esc(audioOp.name)}</strong> <em>(${esc(audioOp.artist)})</em></span>`;
 }
-buildYesterdayBar();
-
 // ===== NAVIGATION PAR ONGLETS =====
 function switchMode(mode) {
   currentMode = mode;
@@ -2055,10 +2051,7 @@ function launchPerfectDay() {
   });
 }
 
-// Init au chargement — try/catch pour garantir que le timer démarre même si la
-// restauration d'état plante sur un navigateur ou un localStorage corrompu
-try { updateScoreBar(); } catch(e) { console.warn('updateScoreBar init:', e); }
-try { restoreAllStates(); } catch(e) { console.warn('restoreAllStates init:', e); }
+// (updateScoreBar et restoreAllStates sont appelés dans initGame ci-dessous)
 
 // ===== COMPTE À REBOURS =====
 function startCountdown() {
@@ -2080,7 +2073,7 @@ function startCountdown() {
   tick();
   setInterval(tick, 1000);
 }
-startCountdown();
+// (startCountdown est appelé dans initGame ci-dessous)
 
 // ===== CONFETTIS =====
 function launchConfetti() {
@@ -2143,8 +2136,7 @@ function launchConfetti() {
   requestAnimationFrame(draw);
 }
 
-// Charge le compteur du mode par défaut au démarrage
-loadDailyCounter('classic');
+// (loadDailyCounter est appelé dans initGame ci-dessous)
 
 // ===== EASTER EGG KONAMI =====
 (function () {
@@ -2186,7 +2178,25 @@ function stopKonamiAudio() {
 }
 
 
-// ===== INIT =====
-updateCounter();
-initFlagGrid();
+// ===== INIT ASYNCHRONE =====
+// Attend le chargement de data.json avant d'initialiser le jeu
+(async function initGame() {
+  try {
+    await loadGameData();
+  } catch(e) {
+    console.error('LogPose — échec du chargement des données :', e);
+    document.body.insertAdjacentHTML('afterbegin',
+      '<div style="padding:1rem;background:#c82020;color:#fff;text-align:center;font-family:sans-serif">' +
+      '⚠️ Erreur de chargement — rechargez la page ou vérifiez votre connexion.</div>');
+    return;
+  }
+  saveTodayTargets();
+  buildYesterdayBar();
+  try { updateScoreBar();    } catch(e) { console.warn('updateScoreBar init:', e); }
+  try { restoreAllStates();  } catch(e) { console.warn('restoreAllStates init:', e); }
+  startCountdown();
+  updateCounter();
+  initFlagGrid();
+  loadDailyCounter('classic');
+})();
 

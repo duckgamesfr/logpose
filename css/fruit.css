@@ -1,0 +1,126 @@
+/* ===== MODE FRUIT DU DÉMON ===== */
+#fruit-section { display: none; }
+#fruit-section.active { display: block; }
+.fruit-layout { display: flex; gap: 36px; align-items: flex-start; flex-wrap: wrap; }
+.fruit-left { flex-shrink: 0; width: 460px; }
+.fruit-right { flex: 1; min-width: 0; }
+
+.fruit-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px 28px;
+  box-shadow: 0 6px 28px var(--shadow);
+  text-align: center;
+}
+.fruit-question {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.fruit-name-display {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+  color: var(--gold-l);
+  margin-bottom: 24px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+/* Révélation fin de partie Classique */
+.classic-reveal {
+  display: none;
+  text-align: center;
+  margin: 0 auto 20px;
+  max-width: 280px;
+  position: relative;
+}
+.classic-reveal img {
+  width: 100%; max-height: 320px;
+  object-fit: cover; object-position: center top;
+  border-radius: 12px;
+  border: 3px solid var(--border);
+  -webkit-user-drag: none; user-select: none;
+}
+.classic-reveal-name {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+}
+
+/* Anti-drag images sensibles */
+#wanted-img, .flag-cell img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+.color-toggle { pointer-events: auto; }
+
+.fruit-reveal {
+  display: none;
+  margin-bottom: 20px;
+  position: relative;
+}
+.fruit-reveal img {
+  width: 100%; max-height: 220px;
+  object-fit: cover; object-position: center top;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+}
+.fruit-reveal-name {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: #fff; font-weight: 700; font-size: 1rem;
+  padding: 20px 10px 8px; border-radius: 0 0 10px 10px;
+  letter-spacing: 0.06em;
+}
+.fruit-hints-row { display: flex; gap: 10px; }
+.fruit-hint-box {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid var(--border2);
+  border-radius: 12px;
+  padding: 14px 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 7px;
+  min-height: 110px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.fruit-hint-box.available {
+  border-color: var(--gold);
+  background: rgba(200,160,60,0.05);
+  cursor: pointer;
+}
+.fruit-hint-box.available:hover {
+  background: rgba(200,160,60,0.14);
+}
+.fruit-hint-box.available .fh-icon { opacity: 0.8; }
+.fruit-hint-box.unlocked {
+  border-color: var(--gold);
+  background: rgba(200,160,60,0.08);
+  cursor: default;
+}
+.fh-icon { font-size: 1.6rem; opacity: 0.4; transition: opacity 0.3s; }
+.fruit-hint-box.unlocked .fh-icon { opacity: 1; }
+.fh-label {
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text2); font-weight: 700;
+  text-align: center;
+}
+.fh-sub {
+  font-size: 0.8rem; color: var(--text2);
+  text-align: center; line-height: 1.35; padding: 0 4px;
+}
+.fruit-hint-box.unlocked .fh-sub { color: var(--gold-l); font-weight: 600; }
+.fruit-status {
+  background: var(--card); border: 2px solid var(--border2);
+  border-radius: 12px; padding: 14px 18px; margin-bottom: 14px;
+  font-size: 0.82rem; letter-spacing: 0.08em; color: var(--text2);
+  text-transform: uppercase; text-align: center;
+}
+
